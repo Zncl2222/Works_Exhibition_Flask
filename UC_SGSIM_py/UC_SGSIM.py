@@ -3,7 +3,6 @@ from UC_SGSIM_py.Krige.kriging import Kriging
 from UC_SGSIM_py.Plot.Plot import Visualize
 import numpy as np
 from ctypes import *
-from multiprocessing import Pool
 import time
 import os
 
@@ -95,32 +94,8 @@ class Simulation:
         #print("Theroritical Randomseed = %d" %(initial_seed+(self.end-self.start)*self.nR))
         return self.RandomField
 
-    def compute_async(self, n_process, randomseed):
-
-        pool = Pool(processes = n_process)
-        self.n_process = n_process
-        self.nR = self.nR * n_process
-        self.RandomField = np.empty([self.size, self.nR])
-
-        randomseed=[]
-        parallel=[]
-        for i in range(n_process):
-            s=self.randomseed+int(i)*(self.nR+300)*(self.size)
-            randomseed.append(int(s))
-            parallel.append(True)
-
-        Z = pool.starmap(self.compute,zip(randomseed,parallel))
-        #print("Zshape=",np.shape(Z))
-        
-        for i in range(n_process):
-            for j in range(int(self.nR/n_process)):
-                self.RandomField[:,(j+int(i*self.nR/n_process))]=Z[i][:,j]
-                
-        return self.RandomField
-
     def variogram_compute(self, n_process = 1):
-        
-        pool = Pool(processes=n_process)
+    
         model_len = self.size
         
         x=np.linspace(0,self.size-1,model_len).reshape(model_len,1)
@@ -130,7 +105,7 @@ class Simulation:
         for i in range(self.nR):
             L.append(np.hstack([x,self.RandomField[:,i].reshape(model_len,1)]))
             
-        self.Variogram = pool.starmap(self.model.Variogram, zip(L))
+        self.Variogram = self.model.Variogram(L)
         self.Variogram = np.array(self.Variogram).T
 
     def MeanPlot(self,n,mean=0,std=1):
@@ -219,32 +194,7 @@ class Simulation_byC(Simulation):
             RandomField[:,i] = list(array)[i*mlen:(i+1)*mlen]
         return RandomField
 
-    def compute_by_dll(self, n_process, randomseed):
-        
-        pool = Pool(processes = n_process)
-        self.n_process = n_process
 
-        if self.parallel_times < 1:
-            self.nR = self.nR * n_process
-            self.parallel_times += 1
-        else:
-            self.nR = self.nR
-
-        self.RandomField = np.empty([self.size, self.nR])
-        
-        randomseed=[]
-        for i in range(n_process):
-            s=self.randomseed+int(i)*(self.nR+300)*(self.size)
-            randomseed.append(int(s))
-
-        Z = pool.starmap(self.cpdll,zip(randomseed))
-
-        for i in range(n_process):
-            for j in range(int(self.nR/n_process)):
-                self.RandomField[:,(j+int(i*self.nR/n_process))]=Z[i][:,j]
-              
-        return self.RandomField
-    
     def vario_cpdll(self, cpu_number):
 
         dll =CDLL('./UC_SGSIM_py/lib/sgsim.dll')
@@ -269,25 +219,3 @@ class Simulation_byC(Simulation):
             Variogram[:,i] = list(vario_array)
 
         return Variogram
-
-    def vario_compute_by_dll(self, n_process = 1):
-
-        pool = Pool(processes = n_process)
-        self.n_process = n_process
-        if self.parallel_times < 1:
-            self.nR = self.nR * n_process
-            self.parallel_times += 1
-        else:
-            self.nR = self.nR
-
-        self.Variogram = np.empty([len(self.hs), self.nR])
-        cpu_number=[]
-        for i in range(self.n_process):
-            cpu_number.append(i)
-
-        Z = pool.starmap(self.vario_cpdll,zip(cpu_number))
-
-        for i in range(n_process):
-            for j in range(int(self.nR/n_process)):
-                self.Variogram[:,(j+int(i*self.nR/n_process))]=Z[i][:,j]
-        return self.Variogram

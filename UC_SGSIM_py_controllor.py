@@ -26,13 +26,13 @@ def SGSIM_py_controllor(*args, **kwargs):
     if kernel == "C":
         sgsim = UC.Simulation_byC(X, Cov_model, nR, randomseed) # Create simulation and input the Cov model
     
-        sgsim.compute_by_dll(1, randomseed) # Start compute with n CPUs
-        sgsim.vario_compute_by_dll(n_process=1)
+        sgsim.cpdll(randomseed) # Start compute with n CPUs
+        sgsim.vario_cpdll()
 
     elif kernel == "Python":
 
         sgsim = UC.Simulation(X, Cov_model, nR, randomseed)
-        sgsim.compute_async(1, randomseed)
+        sgsim.compute(1, randomseed)
         sgsim.variogram_compute()
 
     theory_model = Cov_model.Var_compute(hs)
