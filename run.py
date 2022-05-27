@@ -11,7 +11,7 @@ import time
 import numpy as np
 
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 
 def Plot(data, ptitle,pcolor):
     # Generate the figure **without using pyplot**.
