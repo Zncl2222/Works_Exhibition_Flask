@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <style type="text/css">
+            div{
+                width: 200px;
+                display: inline-block;
+                /*display:inline;*/
+            }
+        </style>
+    </head>
+
+
+    <body>
+        <h2> UnConditional Sequential Gaussian SIMulation (UC_SGSIM) </h2>
+        <hr>
+        <form class="Input" action="/result" method="POST">
+            <br>
+            <label for="Name">Enter model len:</label>
+            <input type="number" name="model_len" id ="model_len" value = "150">
+            <br>
+            <label for="Name">Enter number of realizations:</label>
+            <input type="number" name="nR" id ="nR" value = "10">
+            <br>
+            <label for="Name">Enter band width for lag distance:</label>
+            <input type="number" name="bw" id ="bw" value = "1">
+            <br>
+            <label for="Name">Enter lag distance:</label>
+            <input type="number" name="hs" id ="hs" value = "35">
+            <br>
+            <label for="Name">Enter range:</label>
+            <input type="number" name="range" id ="range" step="0.01" value = "17.32">
+            <br>
+            <label for="Name">Enter sill:</label>
+            <input type="number" name="sill" id ="sill" value = "1">
+            <br>
+            <label for="Name">Enter random seed:</label>
+            <input type="number" name="randomseed" id ="randomseed" value = "123151">
+            <br>
+            <label for="Name">Select model:</label>
+            <select name="model" id ="model">
+                <option>Gaussian</option>
+                <option>Spherical</option>
+            </select>
+            <br>
+            <label for="Name">Select kernel:</label>
+            <select name="kernel" id ="kernel">
+                <option>Python</option>
+                <option>C</option>
+            </select>
+            <br>
+            <input type="Submit" class = "file_submit" value = "submit" style = "position:relative; left:15px">
+        </form>
+        {% if t %}
+        <p> Time : {{t}} s</p>
+        {% endif %}
+        <hr>
+            {% if img_rfg and img_vario %}
+            <div class="img1" draggable="true">
+                <img src='data:image/png;base64,{{img_rfg}}'   
+                style = "border:2px black solid; position:relative; top:10px; left:10px;" />
+            </div>
+            
+            <div align = 'left'>
+                <img src='data:image/png;base64,{{img_vario}}'
+                style ="border:2px black solid; position:relative; top:10px; left:500px;"/>
+            </div>
+
+            {% endif %}
+    </body>
+
+</html>

@@ -1,0 +1,10 @@
+flask
+numpy
+matplotlib
+scipy
+pandas
+ctypes
+multiprocessing
+base64
+io
+gunicorn
