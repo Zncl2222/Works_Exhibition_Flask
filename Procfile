@@ -1,1 +1,1 @@
-web: gunicorn -b 127.0.0.1:8000 -b [::1]:8000 run:app
+web: gunicorn --bind 0.0.0.0:$PORT run:app
