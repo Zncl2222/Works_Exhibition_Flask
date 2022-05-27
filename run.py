@@ -138,7 +138,5 @@ def download():
     path = r'.\static\temp.png'
     return send_file(path, as_attachment=True)
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)
