@@ -103,7 +103,7 @@ def SGSIM():
 
     return jsonify({"X_Result":p,})
 
-@app.route("/", methods=["POST","GET"])
+@app.route("/", methods=["GET"])
 def button():
     return render_template("home.html")
 

@@ -27,7 +27,7 @@ def SGSIM_py_controllor(*args, **kwargs):
         sgsim = UC.Simulation_byC(X, Cov_model, nR, randomseed) # Create simulation and input the Cov model
     
         sgsim.cpdll(randomseed) # Start compute with n CPUs
-        sgsim.vario_cpdll()
+        sgsim.vario_cpdll(1)
 
     elif kernel == "Python":
 
@@ -36,9 +36,9 @@ def SGSIM_py_controllor(*args, **kwargs):
         sgsim.variogram_compute()
 
     theory_model = Cov_model.Var_compute(hs)
-
+    print("ADAD",np.shape(sgsim.Variogram))
     Vario_mean=np.zeros(len(hs))
     for i in range(len(hs)):
-            Vario_mean[i]=np.mean(sgsim.Variogram[i,:])
+        Vario_mean[i]=np.mean(sgsim.Variogram[i,:])
 
     return [sgsim.RandomField,sgsim.Variogram, theory_model, Vario_mean]

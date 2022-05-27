@@ -19,6 +19,7 @@ class Simulation:
         self.size = len(self.Y)
         self.RandomField = np.empty([self.size, self.nR])
         self.parallel_times = 0
+        self.n_process = 1
 
     def compute(self, randomseed = 0, parallel = False):
         
@@ -101,12 +102,13 @@ class Simulation:
         x=np.linspace(0,self.size-1,model_len).reshape(model_len,1)
         print(np.shape(self.RandomField))
         print(np.shape(x))
-        L=[]
+        self.Variogram = np.empty([len(self.hs), self.nR])
+        
         for i in range(self.nR):
-            L.append(np.hstack([x,self.RandomField[:,i].reshape(model_len,1)]))
-            
-        self.Variogram = self.model.Variogram(L)
-        self.Variogram = np.array(self.Variogram).T
+            L=np.hstack([x,self.RandomField[:,i].reshape(model_len,1)])
+            self.Variogram[:,i] = self.model.Variogram(L)
+
+        #self.Variogram = np.array(self.Variogram).T
 
     def MeanPlot(self,n,mean=0,std=1):
         
@@ -185,14 +187,14 @@ class Simulation_byC(Simulation):
         sgsim.restype = None 
         mlen = int(self.size)
         nR = int(self.nR//self.n_process)
-        RandomField = np.empty([self.size, nR])
+        self.RandomField = np.empty([self.size, nR])
         array = (c_double * (mlen*nR))()
 
         sgsim(array, mlen, nR, 17.32, 1, randomseed)
 
         for i in range(nR):
-            RandomField[:,i] = list(array)[i*mlen:(i+1)*mlen]
-        return RandomField
+            self.RandomField[:,i] = list(array)[i*mlen:(i+1)*mlen]
+        return self.RandomField
 
 
     def vario_cpdll(self, cpu_number):
@@ -211,11 +213,11 @@ class Simulation_byC(Simulation):
         vario_array = (c_double * (vario_size))()
         RandomField_array = (c_double * (mlen))()
 
-        Variogram = np.empty([vario_size, nR])
+        self.Variogram = np.empty([vario_size, nR])
        
         for i in range(nR):
-            RandomField_array[:] = self.RandomField[:,i+cpu_number*nR]
+            RandomField_array[:] = self.RandomField[:,i]
             vario(RandomField_array,vario_array, mlen, vario_size, 1)
-            Variogram[:,i] = list(vario_array)
+            self.Variogram[:,i] = list(vario_array)
 
-        return Variogram
+        return self.Variogram
