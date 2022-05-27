@@ -181,7 +181,7 @@ class Simulation_byC(Simulation):
 
     def cpdll(self,randomseed):
         
-        dll =CDLL('./UC_SGSIM_py/lib/sgsim.so')
+        dll =cdll.LoadLibrary('./UC_SGSIM_py/lib/sgsim.so')
         sgsim = dll.sgsim_dll
         sgsim.argtypes = (POINTER(c_double),c_int, c_int, c_double, c_double, c_int)
         sgsim.restype = None 
@@ -198,8 +198,8 @@ class Simulation_byC(Simulation):
 
 
     def vario_cpdll(self, cpu_number):
-
-        dll =CDLL('./UC_SGSIM_py/lib/sgsim.so')
+        
+        dll =cdll.LoadLibrary('./UC_SGSIM_py/lib/sgsim.so')
         vario = dll.variogram
         vario.argtypes = (POINTER(c_double),POINTER(c_double), c_int, c_int, c_int)
         vario.restype = None 
