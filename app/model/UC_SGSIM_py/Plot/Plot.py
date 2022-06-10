@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
-import UC_SGSIM_py as UC
-from UC_SGSIM_py.Plot.base import Plot_Base
-from UC_SGSIM_py.Cov_Model.model import Gaussian, Spherical
+import app.model.UC_SGSIM_py as UC
+from app.model.UC_SGSIM_py.Plot.base import Plot_Base
+from app.model.UC_SGSIM_py.Cov_Model.model import Gaussian, Spherical
 import numpy as np
 import time
 

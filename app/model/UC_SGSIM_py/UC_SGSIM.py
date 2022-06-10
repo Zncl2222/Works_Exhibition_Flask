@@ -1,6 +1,6 @@
-import UC_SGSIM_py as UC
-from UC_SGSIM_py.Krige.kriging import Kriging
-from UC_SGSIM_py.Plot.Plot import Visualize
+import app.model.UC_SGSIM_py as UC
+from app.model.UC_SGSIM_py.Krige.kriging import Kriging
+from app.model.UC_SGSIM_py.Plot.Plot import Visualize
 import numpy as np
 from ctypes import *
 import time
@@ -178,19 +178,22 @@ class Simulation_byC(Simulation):
 
     def __init__(self, Y, model, nR, randomseed = 0, krige_method='SimpleKrige'):
         super().__init__(Y, model, nR, randomseed, krige_method)
+        self.dll = CDLL('./app/model/UC_SGSIM_py/lib/sgsim.dll')
+        self.sgsim = self.dll.sgsim_dll
 
     def cpdll(self,randomseed):
         
-        dll =CDLL('./UC_SGSIM_py/lib/sgsim.so')
-        sgsim = dll.sgsim_dll
-        sgsim.argtypes = (POINTER(c_double),c_int, c_int, c_double, c_double, c_int)
-        sgsim.restype = None 
+        #dll = CDLL('./app/model/UC_SGSIM_py/lib/sgsim.so')
+        #dll = CDLL('./app/model/UC_SGSIM_py/lib/sgsim.dll')
+        #sgsim = dll.sgsim_dll
+        self.sgsim.argtypes = (POINTER(c_double),c_int, c_int, c_double, c_double, c_int)
+        self.sgsim.restype = None 
         mlen = int(self.size)
         nR = int(self.nR//self.n_process)
         self.RandomField = np.empty([self.size, nR])
         array = (c_double * (mlen*nR))()
 
-        sgsim(array, mlen, nR, 17.32, 1, randomseed)
+        self.sgsim(array, mlen, nR, 17.32, 1, randomseed)
 
         for i in range(nR):
             self.RandomField[:,i] = list(array)[i*mlen:(i+1)*mlen]
@@ -199,8 +202,9 @@ class Simulation_byC(Simulation):
 
     def vario_cpdll(self, cpu_number):
         
-        dll =CDLL('./UC_SGSIM_py/lib/sgsim.so')
-        vario = dll.variogram
+        #dll =CDLL('./app/model/UC_SGSIM_py/lib/sgsim.so')
+        #dll = CDLL('./app/model/UC_SGSIM_py/lib/sgsim.dll')
+        vario = self.dll.variogram
         vario.argtypes = (POINTER(c_double),POINTER(c_double), c_int, c_int, c_int)
         vario.restype = None 
 
