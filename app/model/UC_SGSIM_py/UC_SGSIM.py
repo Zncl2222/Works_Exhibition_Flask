@@ -178,7 +178,7 @@ class Simulation_byC(Simulation):
 
     def __init__(self, Y, model, nR, randomseed = 0, krige_method='SimpleKrige'):
         super().__init__(Y, model, nR, randomseed, krige_method)
-        self.dll = CDLL('./app/model/UC_SGSIM_py/lib/sgsim.dll')
+        self.dll = CDLL('./app/model/UC_SGSIM_py/lib/sgsim.so')
         self.sgsim = self.dll.sgsim_dll
 
     def cpdll(self,randomseed):
