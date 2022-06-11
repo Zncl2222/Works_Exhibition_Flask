@@ -4,9 +4,28 @@ from app.controllor import uc_sgsim_py_controllor as ucc
 import time
 import numpy as np
 
-@app.route("/", methods=["GET"])
-def home():
+@app.route("/")
+def about():
     return render_template("home.html")
+
+@app.route("/works")
+def works():
+    return render_template("works.html")
+
+@app.route("/sgsim", methods=["GET"])
+def sgsim():
+    empty_canvas = ucc.plot_empty_canvas()
+    #return render_template("home.html",img_rfg = empty_canvas, img_vario =empty_canvas)
+    return render_template("sgsim.html",img_rfg = empty_canvas, img_vario =empty_canvas)
+
+@app.route("/author")
+def author():
+    return render_template("author.html")
+
+@app.route("/acheivement")
+def acheivement():
+    return render_template("acheivement.html")
+
 
 @app.route("/quicksort", methods=["POST"])
 def quicksort():
@@ -44,6 +63,6 @@ def result():
 
     vario = ucc.variogram_plot(res[1], res[2], res[3])
     
-    return render_template("home.html", img_rfg = rfg, img_vario = vario, t = time_spend)
-
+    #return render_template("home.html", img_rfg = rfg, img_vario = vario, t = time_spend)
+    return render_template("sgsim.html", img_rfg = rfg, img_vario = vario, t = time_spend)
 

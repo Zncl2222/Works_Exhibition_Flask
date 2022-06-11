@@ -49,6 +49,26 @@ def SGSIM_py_controllor(*args, **kwargs):
 
     return [sgsim.RandomField,sgsim.Variogram, theory_model, Vario_mean]
 
+def plot_empty_canvas():
+    
+    fig = Figure()
+    ax = fig.add_subplot(1,1,1)
+    ax.plot()
+    #ax.set_title("Empty Canvas",fontsize=20)
+    #ax.set_xlabel("Index",fontsize=18)
+    #ax.set_ylabel("Value",fontsize=18)
+
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    buf.seek(0)
+
+    FigureCanvas(fig).print_png(buf)
+
+    data = base64.b64encode(buf.getbuffer()).decode("ascii")
+
+    return data
+
+
 def Plot_2(data, ptitle):
 
     fig = Figure()
