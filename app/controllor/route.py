@@ -39,8 +39,8 @@ def quicksort():
     z=[x1,x2]
     return jsonify({"FigResult":z, "Result":arr})
 
-@app.route("/result", methods = ["POST","GET"])
-def result():
+@app.route("/sgsim/results", methods = ["POST","GET"])
+def sgsim_results():
 
     output = request.form.to_dict()
     X = int(output['model_len'])
