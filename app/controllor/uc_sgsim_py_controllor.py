@@ -42,8 +42,8 @@ def SGSIM_py_controllor(*args, **kwargs):
         sgsim.variogram_compute()
 
     theory_model = Cov_model.Var_compute(hs)
-    print("ADAD",np.shape(sgsim.Variogram))
     Vario_mean=np.zeros(len(hs))
+
     for i in range(len(hs)):
         Vario_mean[i]=np.mean(sgsim.Variogram[i,:])
 
@@ -54,9 +54,6 @@ def plot_empty_canvas():
     fig = Figure()
     ax = fig.add_subplot(1,1,1)
     ax.plot()
-    #ax.set_title("Empty Canvas",fontsize=20)
-    #ax.set_xlabel("Index",fontsize=18)
-    #ax.set_ylabel("Value",fontsize=18)
 
     buf = BytesIO()
     fig.savefig(buf, format="png")
