@@ -53,11 +53,9 @@ def sgsim_results():
     model = output['model']
     kernel = output['kernel']
 
-    start = time.time()
     res = ucc.SGSIM_py_controllor(X,nR,bw,hs,a,C0,randomseed,model,kernel)
-    end = time.time()
 
-    time_spend = np.round(end - start,4)
+    time_spend = res[4]
 
     rfg = ucc.Plot_2(res[0], "RandomField")
 
