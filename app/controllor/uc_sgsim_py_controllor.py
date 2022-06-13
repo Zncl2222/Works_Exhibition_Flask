@@ -1,16 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import base64
+import datetime
+from flask import request
 from io import BytesIO
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import time
 import numpy as np
 import app.model.UC_SGSIM_py as UC
+import app.controllor.db_controllor as db
 
 
 def SGSIM_py_controllor(*args, **kwargs):
-    
+
+    start = time.time()
+
     X = args[0]
     nR = args[1]
     bw = args[2]
@@ -26,17 +31,16 @@ def SGSIM_py_controllor(*args, **kwargs):
 
     if model == 'Gaussian':
         Cov_model = UC.Gaussian(hs, bw, a, C0)
+        
     elif model == "Spherical":
         Cov_model = UC.Spherical(hs, bw, a, C0)
 
     if kernel == "C":
         sgsim = UC.Simulation_byC(X, Cov_model, nR, randomseed) # Create simulation and input the Cov model
-    
         sgsim.cpdll(randomseed) # Start compute with n CPUs
         sgsim.vario_cpdll(1)
 
     elif kernel == "Python":
-
         sgsim = UC.Simulation(X, Cov_model, nR, randomseed)
         sgsim.compute(1, randomseed)
         sgsim.variogram_compute()
@@ -47,7 +51,23 @@ def SGSIM_py_controllor(*args, **kwargs):
     for i in range(len(hs)):
         Vario_mean[i]=np.mean(sgsim.Variogram[i,:])
 
-    return [sgsim.RandomField,sgsim.Variogram, theory_model, Vario_mean]
+
+    end = time.time()
+
+    ip = request.remote_addr
+    now = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    time_spend = np.round(end - start,4)
+
+    records = [ip, now, time_spend]
+
+    for item in args:
+        records.append(item)
+
+    mydb = db.database()
+
+    mydb.insert_uc_sgsim(records)
+
+    return [sgsim.RandomField,sgsim.Variogram, theory_model, Vario_mean, time_spend]
 
 def plot_empty_canvas():
     
