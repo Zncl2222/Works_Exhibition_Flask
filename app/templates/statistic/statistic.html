@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Testing{% endblock %}
+
+{% block main %}
+<title>Statistic</title>
+<head>
+    <style type="text/css">
+        .page-item{
+            display:inline-block;
+            margin:1rem;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="jumbotron" style="width: 110rem; height: 13rem">
+        <h2>Records (sgsim)</h2>
+        <p>This is a records of the user statistics</p>
+        <span style="font-weight:bold;">Author: Zncl2222</span>
+        <br>
+        <br><br>
+    </div>
+    
+    <div id="container" style="width: 100%;height:50rem; padding-top:5rem ;"></div>
+    
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        var options = {
+            chart: {
+                type: 'column',
+            },
+            title: {
+                text: 'Frequency (SGSIM)',
+                style:{
+                    fontSize: '2rem', 
+                    color: 'blue' 
+                }
+            },
+            xAxis: {
+                categories: ['Total plot', 'Gaussian_model', 'Spherical_model','Python kernel','C kernel'],
+                labels:{
+                    style:{
+                        color:'red',
+                        fontSize:"1.5rem",
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Frequency',
+                    style:{
+                        fontSize: '1rem', 
+                    }   
+                }
+            },
+            plotOptions :{
+                series: {
+                    borderColor: '#303030'
+                }
+            },  
+            series: [{
+                    
+                colorByPoint: true,
+                colors: ["pink", "cyan"],          
+                name: 'counts',
+                data: {{data}},
+
+            }, 
+    
+            ]
+        };
+
+        var chart = Highcharts.chart('container', options);
+    </script>
+</body>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="/statistic">Frequency</a></li>
+      <li class="page-item"><a class="page-link" href="/statistic/count">Distinction</a></li>
+    </ul>
+  </nav>
+
+{% endblock %}
