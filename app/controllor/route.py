@@ -1,11 +1,15 @@
 from app import app
 from flask import request, jsonify, render_template, Response, send_file
 from app.controllor import uc_sgsim_py_controllor as ucc
+from app.controllor import db_controllor as db
 import time
 import numpy as np
 
 @app.route("/")
 def about():
+    #database = db.database_visited()
+    #database.visited_update()
+    #visited = database.visited_select()
     return render_template("home.html")
 
 @app.route("/works")
@@ -22,10 +26,21 @@ def sgsim():
 def author():
     return render_template("author.html")
 
+@app.route("/statistic")
+def statistic():
+    database = db.database()
+    data = database.select_uc_sgsim_frequency()
+    return render_template("/statistic/statistic.html",data=data)
+
+@app.route("/statistic/count")
+def statistic_count():
+    database = db.database()
+    data = database.select_uc_sgsim_distincition()
+    return render_template("/statistic/statistic_count.html",data=data)
+
 @app.route("/acheivement")
 def acheivement():
     return render_template("acheivement.html")
-
 
 @app.route("/quicksort", methods=["POST"])
 def quicksort():
