@@ -38,12 +38,6 @@ def statistic_count():
     data = database.select_uc_sgsim_distincition()
     return render_template("/statistic/statistic_count.html",data=data)
 
-@app.route("/statistic/date")
-def statistic_count():
-    database = db.database()
-    data = database.select_uc_sgsim_distincition()
-    return render_template("/statistic/statistic_count.html",data=data)
-
 @app.route("/acheivement")
 def acheivement():
     return render_template("acheivement.html")
