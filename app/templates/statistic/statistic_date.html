@@ -28,9 +28,24 @@
     
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
+        function changeTimezone(date, ianatz) {
+
+
+            var invdate = new Date(date.toLocaleString('en-US', {
+                timeZone: ianatz
+            }));
+
+            var diff = date.getTime() - invdate.getTime();
+
+            return new Date(date.getTime() - diff);
+
+        }
+
         var date_data =[];
         var unique_visitors = [];
-        let now_date = new Date();
+        let here = new Date()
+        var now_date = changeTimezone(here, 'Asia/Taipei')
+        console.log(now_date);
         now_date.setMonth(now_date.getMonth()-1);
 
         console.log(now_date);
