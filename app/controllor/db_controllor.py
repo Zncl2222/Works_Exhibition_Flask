@@ -1,11 +1,14 @@
 import os
 import psycopg2
+import datetime
+import time
+
 
 class database:
 
     def __init__(self):
         self.DATABASE_URL = os.environ['DATABASE_URL']
-    
+
     def update_query(self, table, table_columns, val):
 
         conn = psycopg2.connect(self.DATABASE_URL, sslmode='require')
@@ -126,6 +129,36 @@ class database:
         return [model_len, nR, bw, hs, range_, sill, randomseed]
 
 
+    def select_uc_sgsim_date(self):
+
+        now = datetime.datetime.now().strftime('%Y/%m/%d')
+        passed = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime('%Y/%m/%d')
+
+        table = 'user_records_sgsim' 
+        
+        table_columns = 'date, COUNT(date)'
+        condition = f" WHERE date BETWEEN '{passed}' AND '{now}' GROUP BY date ORDER BY date "
+        res = self.select_query(table,table_columns,condition)
+        
+        res_table = {"date":[], "count":[]}
+        days_count = 30
+        count_counter = 0
+        
+        for i in range(30):
+            
+            current_date = (datetime.date.today() - datetime.timedelta(days=days_count))
+            
+            if current_date not in [x[0] for x in res] :
+                res_table["date"].append(int(time.mktime(current_date.timetuple())) * 1000)
+                res_table["count"].append(0)
+            else:
+                res_table["date"].append(int(time.mktime(current_date.timetuple())) * 1000)
+                res_table["count"].append(res[count_counter][1])
+                count_counter += 1
+                
+            days_count -= 1
+
+        return res_table
 
 class database_visited(database):
 
@@ -143,5 +176,6 @@ class database_visited(database):
         visited = int(self.visited_select()) + 1
 
         self.update_query('visited', 'counts', visited)
+
 
         
