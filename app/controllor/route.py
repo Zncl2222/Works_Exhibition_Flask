@@ -7,9 +7,9 @@ import numpy as np
 
 @app.route("/")
 def about():
-    #database = db.database_visited()
-    #database.visited_update()
-    #visited = database.visited_select()
+    database = db.database_visited()
+    database.visited_insert()
+    
     return render_template("home.html")
 
 @app.route("/works")
@@ -40,9 +40,10 @@ def statistic_count():
 
 @app.route("/statistic/date")
 def statistic_date():
-    database = db.database()
+    database = db.database_visited()
     data = database.select_uc_sgsim_date()
-    return render_template("/statistic/statistic_date.html", count = data['count'])
+    visited = database.select_unique_visited()
+    return render_template("/statistic/statistic_date.html", count = data['count'], unique_visited = visited['count'])
 
 @app.route("/acheivement")
 def acheivement():
