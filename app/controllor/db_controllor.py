@@ -2,7 +2,7 @@ import os
 import psycopg2
 import datetime
 import time
-
+from flask import request
 
 class database:
 
@@ -162,20 +162,73 @@ class database:
 
 class database_visited(database):
 
-    def visited_select(self):
+    def select_unique_visited(self):
 
         conn = psycopg2.connect(self.DATABASE_URL, sslmode='require')
         cursor = conn.cursor()
+       
+        unique_res = self.select_query('visited', 'ip, date, COUNT(DISTINCT(ip))', 'GROUP BY ip, date ORDER BY date')
+        
+        unique_res_table = {"date":[], "count":[]}
 
-        res = self.select_query('visited', 'counts', '')[0][0]
+        days_count = 30
+        count_counter = 0
 
-        return res
+        for i in range(30):
+            
+            current_date = (datetime.date.today() - datetime.timedelta(days=days_count))
+            
+            if current_date not in [x[1] for x in unique_res] :
+                unique_res_table["date"].append(int(time.mktime(current_date.timetuple())) * 1000)
+                unique_res_table["count"].append(0)
 
-    def visited_update(self):
+            else:
+                unique_res_table["date"].append(int(time.mktime(current_date.timetuple())) * 1000)
+                unique_res_table["count"].append(unique_res[count_counter][2])
+                count_counter += 1
+                
+            days_count -= 1
 
-        visited = int(self.visited_select()) + 1
+        return unique_res_table
+        
+    def select_all_visited(self):
 
-        self.update_query('visited', 'counts', visited)
+        conn = psycopg2.connect(self.DATABASE_URL, sslmode='require')
+        cursor = conn.cursor()
+       
+        all_res = self.select_query('visited', 'date', '')
+        
+        all_res_table = {"date":[], "count":[]}
+
+        days_count = 30
+        count_counter = 0
+
+        for i in range(30):
+            
+            current_date = (datetime.date.today() - datetime.timedelta(days=days_count))
+            
+            if current_date not in [x[0] for x in unique_res] :
+                all_res_table["date"].append(int(time.mktime(current_date.timetuple())) * 1000)
+                all_res_table["count"].append(0)
+
+            else:
+                all_res_table["date"].append(int(time.mktime(current_date.timetuple())) * 1000)
+                all_res_table["count"].append(unique_res[count_counter][2])
+                count_counter += 1
+                
+            days_count -= 1
+
+        return all_res_table
+
+    def visited_insert(self):
+        
+        table = "visited"
+        table_columns = "(date, ip)"
+        ip = request.remote_addr
+        date = datetime.datetime.now()
+        records = [date, ip]
+        self.insert_query(table, table_columns, records)
+        
 
 
         
