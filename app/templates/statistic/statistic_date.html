@@ -29,10 +29,16 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
         var date_data =[];
+        var unique_visitors = [];
         let now_date = new Date();
         now_date.setMonth(now_date.getMonth()-1);
 
         console.log(now_date);
+        {% for item in unique_visited %}
+
+        unique_visitors.push({{item}});
+        {% endfor %}
+
         {% for item in count %}
         
         date_data.push({{item}});
@@ -94,12 +100,19 @@
             },
 
         },
-        series: [{
-            name: 'sgsim_counts',
-            pointInterval: 24 * 3600 * 1000,
-            pointStart: now_date.getTime(),
-            data: date_data,
-        }, 
+        series: [
+            {
+                name: 'sgsim_counts',
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: now_date.getTime(),
+                data: date_data,
+            },
+            {  
+                name: 'unique_visitors',
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: now_date.getTime(),
+                data: unique_visitors,
+            },
         ],
 
         responsive: {
