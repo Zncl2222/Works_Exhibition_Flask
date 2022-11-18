@@ -3,12 +3,19 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[[source]]
+url = "https://test.pypi.org/simple/"
+verify_ssl = true
+name = "testpypi"
+
 [packages]
 django = "*"
 djangorestframework = "*"
 pandas = "*"
 psycopg2-binary = "*"
 django-environ = "*"
+uc-sgsim = {version = "*", index = "testpypi"}
+django-cors-headers = "*"
 
 [dev-packages]
 
