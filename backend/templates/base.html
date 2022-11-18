@@ -1,7 +1,7 @@
 <html>
-    
+
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="{{ url_for('static',filename='styles/styles.css') }}" rel="stylesheet" type="text/css"/>
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -16,7 +16,7 @@
                 body{
                     padding-left:9rem;
                 }
-                
+
             .social-icons .social-icon {
                 display: inline-flex;
                 align-items: center;
@@ -31,7 +31,7 @@
 
     </head>
 
-    <body>    
+    <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="sideNav" >
             <a class="navbar-brand js-scroll-trigger" href="#page-top"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -43,11 +43,11 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/author">Author</a></li><br>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/acheivement">Acheivement</a></li><br>
                 </ul>
-                    
+
             </div>
         </nav>
-            
-        <nav class="navbar navbar-expand-sm navbar-dark bg-warning fixed-top" >       
+
+        <nav class="navbar navbar-expand-sm navbar-dark bg-warning fixed-top" >
             <h3>Application Programming Interface</h3>
             <!--<p style="text-align:center; padding-left: 80rem; ">Visited : {{visited}}</p>-->
         </nav>
@@ -60,13 +60,13 @@
         <footer class="page-footer font-small blue">
 
 
-            <nav class="navbar navbar-expand-sm navbar-dark bg-light" style="width:110rem; top:15rem;" >       
-         
+            <nav class="navbar navbar-expand-sm navbar-dark bg-light" style="width:110rem; top:15rem;" >
+
                 <!-- Copyright -->
                 <div class="footer-copyright text-center py-3"style="display:inline" >© 2022 Copyright:
                 <a href="https://github.com/Zncl2222" style="display:inline-block"style="display:inline"> Zncl2222</a>
                 <!-- Copyright -->
-    
+
             </nav>
         </footer>
         {% block script %}{% endblock %}

@@ -1,8 +1,8 @@
 flask
 flask_cors
-numpy
+gunicorn
 matplotlib
-scipy
+numpy
 pandas
 psycopg2
-gunicorn
+scipy
