@@ -9,8 +9,8 @@
 }
 #sideNav .navbar-toggler:focus {
     outline-color: #d48a6e;
-} 
-  
+}
+
 @media (min-width: 992px) {
     #sideNav {
       padding-left: 0;

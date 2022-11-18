@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    
+
     <div class="jumbotron" style="width: 110rem; height: 13rem">
         <h2>Records (sgsim)</h2>
         <p>This is a records of the user statistics</p>
@@ -23,9 +23,9 @@
         <br>
         <br><br>
     </div>
-    
+
     <div id="container" style="width: 100%;height:50rem; padding-top:5rem ;"></div>
-    
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
         var options = {
@@ -35,8 +35,8 @@
             title: {
                 text: 'Frequency (SGSIM)',
                 style:{
-                    fontSize: '2rem', 
-                    color: 'blue' 
+                    fontSize: '2rem',
+                    color: 'blue'
                 }
             },
             xAxis: {
@@ -52,9 +52,9 @@
                 title: {
                     text: 'Frequency',
                     style:{
-                        fontSize: '1rem', 
+                        fontSize: '1rem',
                         color:'Black'
-                    }   
+                    }
                 }
             },
             plotOptions :{
@@ -66,17 +66,17 @@
                     }
                 },
 
-                
-            },  
+
+            },
             series: [{
-                    
+
                 colorByPoint: true,
-                colors: ["DarkOrange", "RoyalBlue", "Gray"],          
+                colors: ["DarkOrange", "RoyalBlue", "Gray"],
                 name: 'counts',
                 data: {{data}},
 
-            }, 
-    
+            },
+
             ]
         };
 

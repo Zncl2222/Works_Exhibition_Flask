@@ -14,11 +14,11 @@
 
 </head>
 <body>
-    
+
     <div class="jumbotron" style="width: 110rem; height: 13rem">
         <h2>Records (sgsim)</h2>
         <p>This is a records of the user statistics</p>
-    
+
         <span style="font-weight:bold;">Author: Zncl2222</span>
         <br>
         <br><br>
@@ -29,7 +29,7 @@
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
-        
+
         var options = {
             chart: {
                 type: 'column',
@@ -37,8 +37,8 @@
             title: {
                 text: 'Distinction counts (SGSIM)',
                 style:{
-                    fontSize: '2rem', 
-                    color: 'blue' 
+                    fontSize: '2rem',
+                    color: 'blue'
                 }
             },
             xAxis: {
@@ -56,7 +56,7 @@
                     style:{
                         fontSize: '1rem',
                         color:'Black'
-                    }   
+                    }
                 }
             },
             plotOptions :{
@@ -68,16 +68,16 @@
                     }
                 },
 
-            },  
+            },
             series: [{
-                    
+
                 colorByPoint: true,
-                colors: ["DeepSkyBlue", "Gold", "Pink"],          
+                colors: ["DeepSkyBlue", "Gold", "Pink"],
                 name: 'counts',
                 data: {{data}},
 
-            }, 
-    
+            },
+
             ]
         };
 
