@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'sgsim_app',
-    'todo_list',
-    'orders',
 ]
 
 MIDDLEWARE = [
