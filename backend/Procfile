@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath ZWeb_app backend.ZWeb_app.wsgi --log-file -
+web: gunicorn ZWeb_app.wsgi
