@@ -4,4 +4,4 @@ djangorestframework
 gunicorn
 pandas
 psycopg2-binary
-uc-sgsim = {version = "*", index = "testpypi"}
+uc-sgsim
