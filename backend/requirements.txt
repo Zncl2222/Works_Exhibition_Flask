@@ -3,7 +3,7 @@ django
 django-cors-headers
 django-environ
 djangorestframework
-gunicorn
+gunicorn==19.7.1
 pandas
 psycopg2-binary
 uc-sgsim
