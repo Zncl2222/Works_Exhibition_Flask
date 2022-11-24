@@ -1,1 +1,0 @@
-web: gunicorn ZWeb_app.wsgi
