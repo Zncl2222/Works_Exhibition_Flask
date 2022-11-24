@@ -14,7 +14,7 @@ djangorestframework = "*"
 pandas = "*"
 psycopg2-binary = "*"
 django-environ = "*"
-uc-sgsim = {version = "*", index = "testpypi"}
+uc-sgsim = "*"
 django-cors-headers = "*"
 
 [dev-packages]
