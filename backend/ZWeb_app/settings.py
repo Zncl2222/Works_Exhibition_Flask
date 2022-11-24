@@ -13,11 +13,13 @@ import os
 from pathlib import Path
 
 import environ
+import dj_database_url
 
 ROOT_DIR = environ.Path(__file__) - 3
 
 env = environ.Env()
 env.read_env(str(ROOT_DIR.path('.env')))
+DATABASE_URL = os.getenv('DATABASE_URL')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -86,9 +88,8 @@ WSGI_APPLICATION = 'ZWeb_app.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
