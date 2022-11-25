@@ -24,12 +24,12 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /docker_api
 WORKDIR /docker_api
 COPY . /docker_api/
-RUN ls
+WORKDIR /docker_api/backend
 
 RUN python -m pip install --upgrade pip
-RUN pip install -r ./backend/requirements.txt
+RUN pip install -r ./requirements.txt
 
 EXPOSE 80
 RUN chmod +x /docker_api/backend/docker-entrypoint.sh
-CMD ["uwsgi", "--ini", "uwsgi.ini"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
 
