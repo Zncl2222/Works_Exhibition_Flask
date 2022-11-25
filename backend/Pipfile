@@ -16,6 +16,8 @@ psycopg2-binary = "*"
 django-environ = "*"
 uc-sgsim = "*"
 django-cors-headers = "*"
+gunicorn = "*"
+dj_static = "*"
 
 [dev-packages]
 
