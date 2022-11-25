@@ -24,6 +24,7 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /docker_api
 WORKDIR /docker_api
 COPY . /docker_api/
+RUN ls
 
 RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
