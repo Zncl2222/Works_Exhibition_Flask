@@ -27,9 +27,9 @@ COPY . /docker_api/
 RUN ls
 
 RUN python -m pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install -r ./backend/requirements.txt
 
 EXPOSE 80
-RUN chmod +x /docker_api/docker-entrypoint.sh
+RUN chmod +x /docker_api/backend/docker-entrypoint.sh
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
 
