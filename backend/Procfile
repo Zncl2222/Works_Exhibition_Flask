@@ -1,1 +1,1 @@
-web: python manage.py migrate; gunicorn ZWeb_app.wsgi
+web: python manage.py createsuperuser --noinput; gunicorn ZWeb_app.wsgi
