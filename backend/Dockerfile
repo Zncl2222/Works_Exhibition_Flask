@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye
+FROM python:3.9-slim-bullseye
 LABEL maintainer Zncl2222
 
 RUN echo "deb http://opensource.nchc.org.tw/debian/ bullseye main" > /etc/apt/sources.list \
@@ -6,7 +6,7 @@ RUN echo "deb http://opensource.nchc.org.tw/debian/ bullseye main" > /etc/apt/so
   && echo "deb http://opensource.nchc.org.tw/debian/ bullseye-proposed-updates main" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends\
-  build-essential=12.6 \
+  build-essential \
   libldap2-dev \
   libsasl2-dev \
   libpq-dev \
