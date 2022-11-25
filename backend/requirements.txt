@@ -33,5 +33,5 @@ sqlparse==0.4.3
 toml==0.10.2
 tzdata==2022.6
 uc-sgsim==1.0.0
-virtualenv==20.16.7
 uwsgi
+virtualenv==20.16.7

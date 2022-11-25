@@ -32,5 +32,5 @@ RUN pip install -r ./requirements.txt
 
 EXPOSE 80
 RUN chmod +x /docker_api/backend/docker-entrypoint.sh
-CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
-
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
+CMD ["uwsgi", "--ini", "uwsgi.ini"]
