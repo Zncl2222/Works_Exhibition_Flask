@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 RUN apt-get install -y wget \
   cron \
   wget \
-  python3.10-dev \
+  python3.9-dev \
   && apt-get purge -y --auto-remove \
   && rm -rf /var/lib/apt/lists/*
 
