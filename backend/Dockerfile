@@ -1,11 +1,3 @@
-FROM nginx:stable AS PaaSBuilder
-
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY nginx_django.conf /etc/nginx/sites-available/
-
-RUN mkdir -p /etc/nginx/sites-enabled/\
-    && ln -s /etc/nginx/sites-available/my_nginx.conf /etc/nginx/sites-enabled/
-
 FROM python:3.10-slim-bullseye
 LABEL maintainer Zncl2222
 
@@ -38,5 +30,5 @@ RUN pip install -r requirements.txt
 
 EXPOSE 80
 RUN chmod +x /docker_api/docker-entrypoint.sh
-CMD ["nginx", "-g", "daemon off;", "uwsgi", "--ini", "uwsgi.ini"]
+CMD ["uwsgi", "--ini", "uwsgi.ini"]
 
