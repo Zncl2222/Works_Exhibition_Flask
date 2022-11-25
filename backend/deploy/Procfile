@@ -1,0 +1,1 @@
+web: python ../manage.py createsuperuser --noinput; gunicorn ../ZWeb_app.wsgi
