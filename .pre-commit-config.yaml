@@ -34,3 +34,7 @@ repos:
     -   id: flake8
         language_version: python3
         args: [--max-line-length=100, --extend-ignore=E203]
+-   repo: https://github.com/pre-commit/mirrors-eslint
+    rev: ''
+    hooks:
+    -   id: eslint
