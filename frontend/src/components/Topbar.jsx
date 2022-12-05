@@ -6,9 +6,12 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import LabelTwoToneIcon from "@mui/icons-material/LabelTwoTone";
+import HexagonTwoToneIcon from "@mui/icons-material/HexagonTwoTone";
+import MenuButton from "./Menu";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -83,15 +86,39 @@ const Topbar = () => {
             <LightModeOutlinedIcon sx={{ color: iconColors() }} />
           )}
         </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon sx={{ color: iconColors() }} />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon sx={{ color: iconColors() }} />
-        </IconButton>
-        <IconButton>
-          <PersonOutlinedIcon sx={{ color: iconColors() }} />
-        </IconButton>
+        <MenuButton
+          icon={<NotificationsOutlinedIcon sx={{ color: iconColors() }} />}
+          attr={{
+            color: colors.greenAccent[400],
+            detail: ["comming soon"],
+            subicons: [
+              <LabelTwoToneIcon sx={{ mr: 1 }} />,
+              <HexagonTwoToneIcon sx={{ mr: 1 }} />,
+            ],
+          }}
+        />
+        <MenuButton
+          icon={<SettingsOutlinedIcon sx={{ color: iconColors() }} />}
+          attr={{
+            color: colors.greenAccent[400],
+            detail: ["comming soon"],
+            subicons: [
+              <LabelTwoToneIcon sx={{ mr: 1 }} />,
+              <HexagonTwoToneIcon sx={{ mr: 1 }} />,
+            ],
+          }}
+        />
+        <MenuButton
+          icon={<PersonOutlinedIcon sx={{ color: iconColors() }} />}
+          attr={{
+            color: colors.greenAccent[400],
+            detail: ["comming soon", "comming soon"],
+            subicons: [
+              <LabelTwoToneIcon sx={{ mr: 1 }} />,
+              <HexagonTwoToneIcon sx={{ mr: 1 }} />,
+            ],
+          }}
+        />
       </Box>
     </Box>
   );
