@@ -32,6 +32,10 @@ export const darktheme = {
     800: "#1e5245",
     900: "#0f2922",
   },
+  header: {
+    blue: "#64B5F6",
+    cyan: "#00E5FF",
+  },
   topbar: {
     yellow: "#FBC02D",
     cyan: "#18FFFF",
@@ -75,6 +79,10 @@ export const lighttheme = {
     700: "#94e2cd",
     800: "#b7ebde",
     900: "#dbf5ee",
+  },
+  header: {
+    blue: "#1976D2",
+    cyan: "#00ACC1",
   },
   topbar: {
     yellow: "#FBC02D",
