@@ -17,7 +17,7 @@ const MenuButton = (props) => {
   const detail = attr.detail;
   const subicons = attr.subicons;
   const listItems = detail.map((val, idx) => (
-    <MenuItem onClick={handleClose}>
+    <MenuItem onClick={handleClose} key={idx}>
       {subicons[idx]}
       <Typography color={textColor}>{val}</Typography>
     </MenuItem>
