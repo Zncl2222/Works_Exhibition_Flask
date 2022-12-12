@@ -1,6 +1,9 @@
-# Works_Exhibition_Flask
+# ZWeb
 
-This is a website made by flask, HTML, CSS. Author used flask to create the API and pushed to the heroku free dyno.
+ZWeb is a web app made by django and react. The original intention is to display and promote the [geostatistic algorithm](https://github.com/Zncl2222/Stochastic_UC_SGSIM) written by author. But now this side project will keep updating.
 
-Website:
-https://uc-sgsim.herokuapp.com/
+## Demo
+
+https://zwebapp.netlify.app/
+
+(This project is still under progressing, so the demo can only show the frontend results temporary)
