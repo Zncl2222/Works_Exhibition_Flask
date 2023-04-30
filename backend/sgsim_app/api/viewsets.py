@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.mixins import CreateModelMixin
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from ..models import Sgsim
@@ -13,6 +14,7 @@ from .sgsim import sgsim_gaussian
 class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin):
     queryset = Sgsim.objects.all()
     serializer_class = ParametersSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -45,3 +47,4 @@ class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin):
 class SgsimListViewSet(viewsets.ModelViewSet):
     queryset = Sgsim.objects.all()
     serializer_class = SgsimListSerializer
+    permission_classes = [IsAuthenticated]
