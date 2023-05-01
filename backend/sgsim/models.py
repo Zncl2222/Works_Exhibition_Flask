@@ -2,7 +2,7 @@ from users.models import User
 from django.db import models
 
 
-class Parameters_records(models.Model):
+class SgsimParams(models.Model):
     realizations_number = models.PositiveIntegerField()
     cov_model = models.CharField(max_length=20)
     kernel = models.CharField(
@@ -21,10 +21,10 @@ class Parameters_records(models.Model):
     krige_sill = models.FloatField()
 
 
-class Sgsim(models.Model):
+class SgsimHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     parameters = models.ForeignKey(
-        'Parameters_records',
+        'SgsimParams',
         on_delete=models.CASCADE,
     )
     results = models.JSONField()

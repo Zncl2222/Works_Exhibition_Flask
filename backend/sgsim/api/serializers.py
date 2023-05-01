@@ -1,14 +1,13 @@
 from rest_framework import serializers
 
-from ..models import Parameters_records
-from ..models import Sgsim
+from ..models import SgsimParams
+from ..models import SgsimHistory
 
 
 class ParametersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Parameters_records
+        model = SgsimParams
         fields = [
-            'id',
             'realizations_number',
             'cov_model',
             'kernel',
@@ -24,13 +23,13 @@ class ParametersSerializer(serializers.ModelSerializer):
 
 class SgsimSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sgsim
+        model = SgsimHistory
         fields = '__all__'
 
 
 class SgsimListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sgsim
+        model = SgsimHistory
         fields = ['create_date', 'results', 'run_time']
 
     def to_representation(self, instance):

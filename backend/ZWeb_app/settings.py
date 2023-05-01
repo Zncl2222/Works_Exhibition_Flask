@@ -42,18 +42,26 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
 # Application definition
 
-INSTALLED_APPS = [
+THIRD_PARTY_APPS = [
+    'rest_framework',
+    'corsheaders',
+]
+
+DJANGO_DEFAULT_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'corsheaders',
-    'sgsim_app',
+]
+
+LOCAL_APPS = [
+    'sgsim',
     'users',
 ]
+
+INSTALLED_APPS = DJANGO_DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,6 +93,11 @@ TEMPLATES = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = [
+    'users.authentication.EmailVerificationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 WSGI_APPLICATION = 'ZWeb_app.wsgi.application'
 
