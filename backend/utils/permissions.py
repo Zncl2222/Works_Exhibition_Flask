@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from exceptions import EmailNotVerified
+from .exceptions import EmailNotVerified
 
 
 class EmailVerify(permissions.BasePermission):

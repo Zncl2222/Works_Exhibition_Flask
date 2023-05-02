@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.shortcuts import redirect
+from django.utils import timezone
 from ZWeb_app import settings
 from django.utils.crypto import get_random_string
 
@@ -8,7 +9,7 @@ from rest_framework.response import Response
 from .serializers import UserSerializer
 
 from .models import EmailValidationToken, User
-from .serializers import EmailValidationSerializer
+from .serializers import EmailValidationSerializer, EmailTokenValidationSerializer
 
 
 class RegisterView(generics.CreateAPIView):
@@ -69,8 +70,9 @@ class EmailValidationView(generics.CreateAPIView):
 
 class EmailValidationConfirmView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = EmailTokenValidationSerializer
 
-    def get(self, request, token):
+    def email_validation(self, token):
         try:
             email_validation_token = EmailValidationToken.objects.get(token=token)
         except EmailValidationToken.DoesNotExist:
@@ -84,7 +86,27 @@ class EmailValidationConfirmView(generics.GenericAPIView):
                 {'detail': 'Email already validated.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        time_diff = (timezone.now() - email_validation_token.created_at).total_seconds() / 60
+        if time_diff > 10:
+            return Response(
+                {'detail': 'Token is expired, please re-send a new token and validate again.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         user.email_validated = True
         user.save()
         email_validation_token.delete()
         return redirect(settings.REDIRECT_URL)
+
+    def get(self, request):
+        serializer = self.get_serializer(data=request.GET)
+        serializer.is_valid(raise_exception=True)
+        token = serializer.validated_data['token']
+        return self.email_validation(token)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        token = serializer.validated_data['token']
+        return self.email_validation(token)
