@@ -15,3 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class EmailValidationSerializer(serializers.Serializer):
     email = serializers.EmailField()
+
+
+class EmailTokenValidationSerializer(serializers.Serializer):
+    token = serializers.CharField(max_length=64)
