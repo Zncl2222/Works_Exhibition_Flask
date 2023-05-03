@@ -1,0 +1,7 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore packages relative
+*Pipfile
+*Pipfile.lock
