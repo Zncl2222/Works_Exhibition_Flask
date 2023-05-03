@@ -92,8 +92,8 @@ const Topbar = () => {
             color: colors.greenAccent[400],
             detail: ["comming soon"],
             subicons: [
-              <LabelTwoToneIcon sx={{ mr: 1 }} />,
-              <HexagonTwoToneIcon sx={{ mr: 1 }} />,
+              <LabelTwoToneIcon key={"LabelTwoToneIcon"} sx={{ mr: 1 }} />,
+              <HexagonTwoToneIcon key={"HexagonTwoToneIcon"} sx={{ mr: 1 }} />,
             ],
           }}
         />
@@ -103,8 +103,8 @@ const Topbar = () => {
             color: colors.greenAccent[400],
             detail: ["comming soon"],
             subicons: [
-              <LabelTwoToneIcon sx={{ mr: 1 }} />,
-              <HexagonTwoToneIcon sx={{ mr: 1 }} />,
+              <LabelTwoToneIcon key={"LabelTwoToneIcon"} sx={{ mr: 1 }} />,
+              <HexagonTwoToneIcon key={"HexagonTwoToneIcon"} sx={{ mr: 1 }} />,
             ],
           }}
         />
@@ -114,8 +114,8 @@ const Topbar = () => {
             color: colors.greenAccent[400],
             detail: ["comming soon", "comming soon"],
             subicons: [
-              <LabelTwoToneIcon sx={{ mr: 1 }} />,
-              <HexagonTwoToneIcon sx={{ mr: 1 }} />,
+              <LabelTwoToneIcon key={"LabelTwoToneIcon"} sx={{ mr: 1 }} />,
+              <HexagonTwoToneIcon key={"HexagonTwoToneIcon"} sx={{ mr: 1 }} />,
             ],
           }}
         />
