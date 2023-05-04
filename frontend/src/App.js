@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./components/Topbar";
 import Sidebar from "./components/Sidebar";
+import Dashboard from "./pages/sgsim";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -17,6 +18,7 @@ function App() {
             <Topbar />
             <Routes>
               <Route path="/" />
+              <Route path="/sgsim" element={<Dashboard />} />
             </Routes>
           </main>
         </div>
