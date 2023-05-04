@@ -2,6 +2,12 @@ import { useState, Fragment } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton, Typography } from "@mui/material";
+import PropTypes from "prop-types";
+
+MenuButton.propTypes = {
+  icon: PropTypes.string.isRequired,
+  attr: PropTypes.string.isRequired,
+};
 
 const MenuButton = (props) => {
   const { icon, attr } = props;

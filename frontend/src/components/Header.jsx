@@ -1,5 +1,11 @@
 import { Typography, Box, useTheme } from "@mui/material";
 import { colorSettings } from "../theme";
+import PropTypes from "prop-types";
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+};
 
 const Header = ({ title, subtitle }) => {
   const theme = useTheme();
