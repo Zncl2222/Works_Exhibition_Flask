@@ -4,11 +4,6 @@ import MenuItem from "@mui/material/MenuItem";
 import { IconButton, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 
-MenuButton.propTypes = {
-  icon: PropTypes.string.isRequired,
-  attr: PropTypes.string.isRequired,
-};
-
 const MenuButton = (props) => {
   const { icon, attr } = props;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -36,6 +31,15 @@ const MenuButton = (props) => {
       </Menu>
     </Fragment>
   );
+};
+
+MenuButton.propTypes = {
+  icon: PropTypes.element.isRequired,
+  attr: PropTypes.shape({
+    color: PropTypes.string.isRequired,
+    detail: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    subicons: PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,
+  }).isRequired,
 };
 
 export default MenuButton;

@@ -1,14 +1,9 @@
+/* eslint-disable react/prop-types */
+
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
-ListItemLink.propTypes = {
-  icon: PropTypes.string.isRequired,
-  primary: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  isSubList: PropTypes.bool,
-};
 
 const ListItemLink = (props) => {
   const { icon, primary, to, isSubList = false } = props;
@@ -28,6 +23,13 @@ const ListItemLink = (props) => {
       />
     </ListItemButton>
   );
+};
+
+ListItemLink.propTypes = {
+  icon: PropTypes.element.isRequired,
+  primary: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+  isSubList: PropTypes.bool,
 };
 
 export default ListItemLink;
