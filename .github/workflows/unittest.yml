@@ -45,4 +45,14 @@ jobs:
           CSRF_TRUSTED_ORIGINS: ${{vars.TEST_CSRF_TRUSTED_ORIGINS}}
         run: |
           cd backend
-          coverage run -m pytest --reuse-db -v -s --junitxml=report.xml
+          pytest --reuse-db -v -s --cov --cov-report xml:coverage.xml
+      - name: Run codacy-coverage-reporter
+        if: matrix.python-version == '3.11'
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          # or
+          # api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: backend/coverage.xml
+          # or a comma-separated list for multiple reports
+          # coverage-reports: <PATH_TO_REPORT>, <PATH_TO_REPORT>
