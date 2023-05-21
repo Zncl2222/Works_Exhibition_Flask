@@ -3,8 +3,10 @@ from rest_framework import viewsets
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django_filters import rest_framework as filters
 
 from ..models import SgsimHistory
+from .filters import SgsimHistoryFilter
 from .serializers import ParametersSerializer
 from .serializers import SgsimListSerializer
 from .serializers import SgsimSerializer
@@ -44,3 +46,5 @@ class SgsimListViewSet(viewsets.ModelViewSet):
     queryset = SgsimHistory.objects.all()
     serializer_class = SgsimListSerializer
     permission_classes = [IsAuthenticated, EmailVerify]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = SgsimHistoryFilter
