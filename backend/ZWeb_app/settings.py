@@ -45,6 +45,7 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 THIRD_PARTY_APPS = [
     'rest_framework',
     'corsheaders',
+    'django_filters',
 ]
 
 DJANGO_DEFAULT_APPS = [
