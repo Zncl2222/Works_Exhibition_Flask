@@ -7,6 +7,7 @@ from django_filters import rest_framework as filters
 
 from ..models import SgsimHistory
 from .filters import SgsimHistoryFilter
+from .paginations import SgsimListPagination
 from .serializers import ParametersSerializer
 from .serializers import SgsimListSerializer
 from .serializers import SgsimSerializer
@@ -45,6 +46,7 @@ class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin):
 class SgsimListViewSet(viewsets.ModelViewSet):
     queryset = SgsimHistory.objects.all()
     serializer_class = SgsimListSerializer
+    pagination_class = SgsimListPagination
     permission_classes = [IsAuthenticated, EmailVerify]
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = SgsimHistoryFilter
