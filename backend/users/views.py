@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.utils import timezone
-from ZWeb_app import settings
+from core import settings
 from django.utils.crypto import get_random_string
 
 from rest_framework import generics, permissions, status
