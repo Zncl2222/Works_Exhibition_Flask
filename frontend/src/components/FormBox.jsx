@@ -1,15 +1,14 @@
 import { Box, Typography, useTheme } from "@mui/material";
 // import TextField from "@mui/material/TextField";
-import SelectInputs from "./SelectInputs";
+// import SelectInputs from "./SelectInputs";
 import { colorSettings } from "../theme";
 import PropTypes from "prop-types";
-import BasicInputs from "./BasicInputs";
+// import BasicInputs from "./BasicInputs";
 
 const FormBox = (props) => {
-  const { icon, title, inputItems = [], selectMenus = [] } = props;
+  const { icon, title, customComponents } = props;
   const theme = useTheme();
   const colors = colorSettings(theme.palette.mode);
-
   return (
     <Box width="100%" m="0 30px">
       <Box display="flex" justifyContent="space-between">
@@ -22,14 +21,9 @@ const FormBox = (props) => {
           >
             {title}
           </Typography>
-          <SelectInputs
-            label="Core"
-            menu={selectMenus}
-            box_display="inline-block"
-          />
+          <Box>{customComponents}</Box>
         </Box>
       </Box>
-      <BasicInputs items={inputItems} />
     </Box>
   );
 };
@@ -37,8 +31,7 @@ const FormBox = (props) => {
 FormBox.propTypes = {
   icon: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired,
-  inputItems: PropTypes.arrayOf(PropTypes.string),
-  selectMenus: PropTypes.arrayOf(PropTypes.string),
+  customComponents: PropTypes.element,
 };
 
 export default FormBox;

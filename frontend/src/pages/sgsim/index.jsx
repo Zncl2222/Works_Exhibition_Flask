@@ -12,6 +12,9 @@ import Footer from "../../components/Footer";
 
 import FormBox from "../../components/FormBox";
 // import StatBox from "../../components/StatBox";
+import BasicInputs from "../../components/BasicInputs";
+import SelectInputs from "../../components/SelectInputs";
+import PlotComponent from "../../components/PlotComponent";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -21,9 +24,9 @@ const Dashboard = () => {
     "Model Size (X)",
     "Kriging Range",
     "Kriging Sill",
-    "Covariance Model",
   ];
   const cores = ["Python", "C"];
+  const covModel = ["Gaussian", "Exponential", "Spherical"];
 
   return (
     <Box m="20px">
@@ -67,8 +70,23 @@ const Dashboard = () => {
         >
           <FormBox
             title="Parameters"
-            inputItems={forms}
-            selectMenus={cores}
+            customComponents={
+              <Box>
+                <Box sx={{ mb: 1 }}>
+                  <SelectInputs
+                    label="Core"
+                    menu={cores}
+                    box_display="inline-block"
+                  />
+                  <SelectInputs
+                    label="Covariance Model"
+                    menu={covModel}
+                    box_display="inline-block"
+                  />
+                </Box>
+                <BasicInputs items={forms} />
+              </Box>
+            }
             icon={
               <InputIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -144,7 +162,9 @@ const Dashboard = () => {
               </IconButton>
             </Box>
           </Box>
-          <Box height="250px" m="-20px 0 0 0"></Box>
+          <Box height="300px" m="100px 0 0 0">
+            <PlotComponent />
+          </Box>
         </Box>
         <Box
           gridColumn="span 4"
