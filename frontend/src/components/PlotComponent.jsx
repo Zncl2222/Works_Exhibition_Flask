@@ -1,62 +1,110 @@
-import Plot from "react-plotly.js";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
 const PlotComponent = () => {
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  // Generate random data for 100 lines
+  const numberOfLines = 10;
+  const dataArray = [];
+  for (let i = 0; i < numberOfLines; i++) {
+    const lineData = [];
+    for (let j = 0; j < 10; j++) {
+      lineData.push(Math.random() * 10); // Generate random data
+    }
+    dataArray.push(lineData);
+  }
+
+  const labels = Array(10)
+    .fill(0)
+    .map((_, i) => i.toString()); // Labels as an array of strings
+
+  // Create an array of datasets, one for each line
+  const datasets = dataArray.map((data, index) => ({
+    label: `Line ${index + 1}`,
+    data: data,
+    borderColor: getRandomColor(), // Generate a random color for each line
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    pointBackgroundColor: getRandomColor(),
+    pointBorderColor: getRandomColor(),
+    pointRadius: 4,
+    pointHoverRadius: 5,
+    fill: false,
+  }));
+
+  // Function to generate a random color
+  function getRandomColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  const data = {
+    labels: labels,
+    datasets: datasets,
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        type: "linear",
+        title: {
+          display: true,
+          text: "Index (X-Axis)",
+          color: "white",
+        },
+        ticks: {
+          color: "white",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Value (Y-Axis)",
+          color: "white",
+        },
+        ticks: {
+          color: "white",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: numberOfLines <= 10,
+        labels: {
+          display: numberOfLines <= 10,
+          color: "white",
+        },
+      },
+    },
+  };
+
   return (
-    <Plot
-      data={[
-        {
-          x: ["Jan", "Feb", "Mar", "Apr", "May"],
-          y: [10, 15, 20, 18, 25],
-          mode: "lines+markers",
-          line: {
-            color: "red", // Set the line color to red
-            width: 2, // Set the line width
-            // Set the line edge color to black
-            // Use rgba to control the alpha (transparency) value
-            // Here, we set it to fully opaque (255) for a solid edge
-            // You can adjust the alpha value as needed
-            shape: "linear",
-            dash: "solid",
-            linecolor: "rgba(121, 0, 0, 255)", // Set the line edge color to black
-          },
-          marker: {
-            color: "rgba(222,55,61,1)",
-            line: {
-              width: 2.5,
-              color: "rgba(0,0,0,1)",
-            },
-          },
-        },
-        // Add more traces for additional lines as needed
-      ]}
-      layout={{
-        paper_bgcolor: "rgba(0,0,0,0)",
-        plot_bgcolor: "rgba(0,0,0,0)",
-        xaxis: {
-          title: "Month",
-          titlefont: {
-            color: "white",
-          },
-          tickfont: {
-            color: "white",
-          },
-        },
-        yaxis: {
-          title: "Value",
-          titlefont: {
-            color: "white",
-          },
-          tickfont: {
-            color: "white",
-          },
-        },
-        legend: {
-          font: {
-            color: "white",
-          },
-        },
-      }}
-    />
+    <div style={{ height: "400px" }}>
+      <Line data={data} options={options} />
+    </div>
   );
 };
 
