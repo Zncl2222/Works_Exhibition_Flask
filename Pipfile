@@ -4,22 +4,22 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-djangorestframework = "*"
-pandas = "*"
+django = "4.2.5"
+djangorestframework = "3.14.0"
+pandas = "2.1.1"
 psycopg2-binary = "*"
 django-environ = "*"
 django-cors-headers = "*"
 gunicorn = "*"
 dj_static = "*"
-uc-sgsim = "*"
-django-filter = "*"
+uc-sgsim = "1.1.1"
+django-filter = "23.3"
+
+[dev-packages]
+pre-commit = "*"
 coverage = "*"
 pytest-django = "*"
 pytest-cov = "*"
 
-[dev-packages]
-pre-commit = "*"
-
 [requires]
-python_version = "3.10"
+python_version = "3.11"
