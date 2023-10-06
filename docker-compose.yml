@@ -1,0 +1,68 @@
+version: "3.6"
+services:
+  app:
+    restart: unless-stopped
+    container_name: ${DOCKER_APP_CONTAINER}
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile.app
+      args:
+        - ENV=.env
+    env_file: ./.env
+    volumes:
+      - type: volume
+        source: log
+        target: /log
+        volume:
+          nocopy: false
+    depends_on:
+      - db
+    expose:
+      - ${DOCKER_UWSGI_INTERNAL_PORT}
+    networks:
+      - internal
+
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile.web
+      args:
+        - ENV=.env
+    container_name: ${DOCKER_WEB_CONTAINER}
+    ports:
+      - "${DEPLOY_WEB_PORT}:80"
+    environment:
+      NGINX_PORT: ${DEPLOY_WEB_PORT}
+      NGINX_PROJECT: ${DOCKER_APP_CONTAINER}
+      NGINX_UWSGI_INTERNAL_PORT: ${DOCKER_UWSGI_INTERNAL_PORT}
+    volumes:
+      - ./deploy/nginx.conf:/nginx.conf.template
+      - ./deploy/uwsgi_params:/etc/nginx/uwsgi_params
+    depends_on:
+      - app
+    links:
+      - app
+    networks:
+      - internal
+  db:
+    image: postgres:15
+    restart: always
+    container_name: ${DOCKER_DB_CONTAINER}
+    ports:
+      - "${DOCKER_DB_PORT}:${DOCKER_DB_INNER_PORT}"
+    environment:
+      POSTGRES_USER: ${DOCKER_DB_USER}
+      POSTGRES_PASSWORD: ${DOCKER_DB_PASSWORD}
+      POSTGRES_DB: ${DOCKER_DB_DATABASE}
+    env_file: ./.env
+    networks:
+      - internal
+
+networks:
+  internal:
+    name: zweb
+
+volumes:
+  staticfiles:
+  log:

@@ -15,7 +15,7 @@ export default ({ mode }) => {
     },
     build: {
       rollupOptions: {
-        external: ["react", "react-router", "react-router-dom"],
+        external: ["react", "react-router", "react-router-dom", "redux"],
         output: {
           globals: {
             react: "React",

@@ -1,0 +1,16 @@
+FROM node:20 as build
+
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY ./frontend .
+RUN yarn
+COPY ./.env .env
+RUN yarn build
+
+FROM nginx:1.24.0
+RUN ln -snf /usr/share/zoneinfo/Asia/Taipei /etc/localtime && echo "Asia/Taipei" > /etc/timezone
+
+COPY --from=build /app/dist /usr/share/nginx/html
+
+CMD envsubst '\$NGINX_PORT, \$NGINX_PROJECT, \$NGINX_UWSGI_INTERNAL_PORT'  < /nginx.conf.template > /etc/nginx/nginx.conf && \
+	exec nginx -g "daemon off;"
