@@ -22,7 +22,7 @@ env.read_env(str(ROOT_DIR.path('.env')))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-REDIRECT_URL = env('WEB_HOST') + ':' + env('WEB_PORT')
+REDIRECT_URL = env('DEPLOY_WEB_HOST') + ':' + env('DEPLOY_WEB_PORT')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -31,14 +31,13 @@ REDIRECT_URL = env('WEB_HOST') + ':' + env('WEB_PORT')
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if env('DEBUG') == 'False':
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = False if env('DEBUG') == 'False' else True
 
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -160,6 +159,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
