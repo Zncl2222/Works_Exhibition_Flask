@@ -38,8 +38,8 @@ jobs:
         env:
           DATABASE_URL: ${{vars.TEST_DATABASE_URL}}
           SECRET_KEY: ${{vars.TEST_SECRET_KEY}}
-          WEB_HOST: ${{vars.TEST_WEB_HOST}}
-          WEB_PORT: ${{vars.TEST_WEB_PORT}}
+          DEPLOY_WEB_HOST: ${{vars.TEST_WEB_HOST}}
+          DEPLOY_WEB_PORT: ${{vars.TEST_WEB_PORT}}
           DEBUG: ${{vars.TEST_DEBUG}}
           EMAIL_PASSWORD: ${{vars.TEST_EMAIL_PASSWORD}}
           CSRF_TRUSTED_ORIGINS: ${{vars.TEST_CSRF_TRUSTED_ORIGINS}}
