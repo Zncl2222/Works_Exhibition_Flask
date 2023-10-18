@@ -100,6 +100,9 @@ AUTHENTICATION_BACKENDS = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# COOKIE -----------------------------------------------------------------------
+SESSION_COOKIE_NAME = env('DJANGO_SESSION_COOKIE_NAME')
+CSRF_COOKIE_NAME = env('DJANGO_CSRF_COOKIE_NAME')
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
