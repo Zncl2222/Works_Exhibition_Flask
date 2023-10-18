@@ -28,14 +28,14 @@ class ViewSetsTests(APITestCase):
             'krige_sill': 1,
         }
         resp = self.client.post(
-            '/sgsim/',
+            '/api/sgsim/',
             data,
         )
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_email_failed_sgsim_list(self):
         resp = self.client.get(
-            '/sgsimlist/',
+            '/api/sgsimlist/',
         )
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -55,7 +55,7 @@ class ViewSetsTests(APITestCase):
         self.customer.email_validated = True
         self.customer.save()
         resp = self.client.post(
-            '/sgsim/',
+            '/api/sgsim/',
             data,
         )
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
@@ -64,6 +64,6 @@ class ViewSetsTests(APITestCase):
         self.customer.email_validated = True
         self.customer.save()
         resp = self.client.get(
-            '/sgsimlist/',
+            '/api/sgsimlist/',
         )
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
