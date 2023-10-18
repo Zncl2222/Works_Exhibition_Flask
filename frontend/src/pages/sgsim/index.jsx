@@ -10,6 +10,10 @@ import BasicInputs from "../../components/BasicInputs";
 import SelectInputs from "../../components/SelectInputs";
 import HistoryIcon from "@mui/icons-material/History";
 
+// TODO: Finished sgsim API fetching
+// import { useSelector, useDispatch } from "react-redux";
+// import { useEffect } from "react";
+
 const Dashboard = () => {
   const theme = useTheme();
   const colors = colorSettings(theme.palette.mode);
@@ -21,6 +25,13 @@ const Dashboard = () => {
   ];
   const cores = ["Python", "C"];
   const covModel = ["Gaussian", "Exponential", "Spherical"];
+
+  // const dispatch = useDispatch();
+  // TODO: Finished sgsim api fetching
+  // const { sgsimList } = useSelector((state) => state.sgsim)
+  // useEffect(() => {
+  // 	dispatch({ type: 'FETCH_SGSIM' })
+  // }, [])
 
   return (
     <Box m="20px">

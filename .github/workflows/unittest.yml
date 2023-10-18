@@ -43,6 +43,8 @@ jobs:
           DEBUG: ${{vars.TEST_DEBUG}}
           EMAIL_PASSWORD: ${{vars.TEST_EMAIL_PASSWORD}}
           CSRF_TRUSTED_ORIGINS: ${{vars.TEST_CSRF_TRUSTED_ORIGINS}}
+          DJANGO_SESSION_COOKIE_NAME: ci_session
+          DJANGO_CSRF_COOKIE_NAME: ci_csrt_token
         run: |
           cd backend
           pytest --reuse-db -v -s --cov --cov-report xml:coverage.xml
