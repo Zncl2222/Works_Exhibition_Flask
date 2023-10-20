@@ -1,9 +1,10 @@
+import pytest
 from rest_framework import status
+from users.models import User
 from rest_framework.test import APITestCase
 
-from users.models import User
 
-
+@pytest.mark.sgsim
 class ViewSetsTests(APITestCase):
     def setUp(self):
         self.customer = User.objects.create(
@@ -27,17 +28,12 @@ class ViewSetsTests(APITestCase):
             'krige_range': 17.32,
             'krige_sill': 1,
         }
-        resp = self.client.post(
-            '/api/sgsim/',
-            data,
-        )
-        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+        resp = self.client.post('/api/sgsim/', data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_email_failed_sgsim_list(self):
-        resp = self.client.get(
-            '/api/sgsimlist/',
-        )
-        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+        resp = self.client.get('/api/sgsimlist/')
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_sgsim(self):
         data = {
@@ -54,16 +50,11 @@ class ViewSetsTests(APITestCase):
         }
         self.customer.email_validated = True
         self.customer.save()
-        resp = self.client.post(
-            '/api/sgsim/',
-            data,
-        )
-        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        resp = self.client.post('/api/sgsim/', data)
+        assert resp.status_code == status.HTTP_201_CREATED
 
     def test_sgsim_list(self):
         self.customer.email_validated = True
         self.customer.save()
-        resp = self.client.get(
-            '/api/sgsimlist/',
-        )
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        resp = self.client.get('/api/sgsimlist/')
+        assert resp.status_code == status.HTTP_200_OK
