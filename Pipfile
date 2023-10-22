@@ -12,7 +12,7 @@ django-environ = "*"
 django-cors-headers = "*"
 gunicorn = "*"
 dj_static = "*"
-uc-sgsim = "1.2.5"
+uc-sgsim = "1.2.8"
 django-filter = "23.3"
 
 [dev-packages]

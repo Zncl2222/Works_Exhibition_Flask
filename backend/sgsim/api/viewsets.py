@@ -11,7 +11,7 @@ from .paginations import SgsimListPagination
 from .serializers import ParametersSerializer
 from .serializers import SgsimListSerializer
 from .serializers import SgsimSerializer
-from .sgsim import get_cov_model
+from .sgsim import Sgsim
 from utils.permissions import EmailVerify
 
 
@@ -24,8 +24,7 @@ class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        cov_model = get_cov_model(serializer.validated_data['cov_model'])
-        data, run_time = cov_model(
+        data, run_time = Sgsim(
             data=serializer.validated_data,
         ).run_sgsim()
 
