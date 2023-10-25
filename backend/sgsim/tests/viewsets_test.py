@@ -32,7 +32,7 @@ class ViewSetsTests(APITestCase):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_email_failed_sgsim_list(self):
-        resp = self.client.get('/api/sgsimlist/')
+        resp = self.client.get('/api/sgsim/')
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_sgsim(self):
@@ -56,5 +56,5 @@ class ViewSetsTests(APITestCase):
     def test_sgsim_list(self):
         self.customer.email_validated = True
         self.customer.save()
-        resp = self.client.get('/api/sgsimlist/')
+        resp = self.client.get('/api/sgsim/')
         assert resp.status_code == status.HTTP_200_OK
