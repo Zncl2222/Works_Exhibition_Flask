@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
@@ -15,10 +15,19 @@ from .sgsim import Sgsim
 from utils.permissions import EmailVerify
 
 
-class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin):
+class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin, ListModelMixin):
     queryset = SgsimHistory.objects.all()
     serializer_class = ParametersSerializer
+    pagination_class = SgsimListPagination
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = SgsimHistoryFilter
     permission_classes = [IsAuthenticated, EmailVerify]
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return self.serializer_class
+        elif self.action == 'list':
+            return SgsimListSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -40,12 +49,3 @@ class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin):
         serializer.save()
 
         return Response(data, status=status.HTTP_201_CREATED)
-
-
-class SgsimListViewSet(viewsets.ModelViewSet):
-    queryset = SgsimHistory.objects.all()
-    serializer_class = SgsimListSerializer
-    pagination_class = SgsimListPagination
-    permission_classes = [IsAuthenticated, EmailVerify]
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = SgsimHistoryFilter
