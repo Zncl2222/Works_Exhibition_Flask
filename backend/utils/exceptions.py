@@ -8,3 +8,12 @@ class EmailNotVerified(APIException):
 
     def __init__(self, message=detail):
         self.detail = message
+
+
+class AlreadyVerified(APIException):
+    status_code = 400
+    detail = 'You account have been verified.'
+    code = ''
+
+    def __init__(self, message=detail):
+        self.detail = message
