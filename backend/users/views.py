@@ -1,15 +1,14 @@
-from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.utils import timezone
 from core import settings
-from django.utils.crypto import get_random_string
 
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from .serializers import UserSerializer
 
-from .models import EmailValidationToken, User
-from .serializers import EmailValidationSerializer, EmailTokenValidationSerializer
+from .models import EmailValidationToken
+from .serializers import EmailTokenValidationSerializer
+from .mail import send_validation_mail
 
 
 class RegisterView(generics.CreateAPIView):
@@ -19,56 +18,9 @@ class RegisterView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+        send_validation_mail(serializer.validated_data['email'])
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-class EmailValidationView(generics.CreateAPIView):
-    serializer_class = EmailValidationSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        email = serializer.validated_data['email']
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            user = None
-        if user:
-            if user.email_validated:
-                return Response(
-                    {'detail': 'Email already validated.'},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            else:
-                token = get_random_string(64)
-                EmailValidationToken.objects.filter(user=user).delete()
-                EmailValidationToken.objects.create(user=user, token=token)
-                subject = 'Please confirm your email address'
-                url = f'{settings.REDIRECT_URL}/users/email-validation/confirm/?token='
-                message = (
-                    'This is a validation from Zweb, please verify your email with the link'
-                    + f'Or you can input {token} manually to activate your account.'
-                )
-                from_email = 'Zweb <noreply@zweb.com>'
-                recipient_list = [email]
-                send_mail(
-                    subject,
-                    message,
-                    from_email,
-                    recipient_list,
-                    html_message=f'{message}<br><a href={url}{token}>{url}{token}</a>',
-                )
-                return Response(
-                    {'detail': 'Validation email sent.'},
-                    status=status.HTTP_201_CREATED,
-                )
-        else:
-            return Response(
-                {'detail': 'User not found.'},
-                status=status.HTTP_404_NOT_FOUND,
-            )
 
 
 class EmailValidationConfirmView(generics.GenericAPIView):

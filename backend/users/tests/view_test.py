@@ -4,34 +4,33 @@ from rest_framework.test import APITestCase
 from ..models import User, EmailValidationToken
 
 
-class EmailValidationViewTest(APITestCase):
-    def setUp(self):
-        self.url = reverse('email_validation')
-        self.email = 'test@example.com'
-        self.user = User.objects.create(email=self.email)
+class RegisterViewTest(APITestCase):
+    url = reverse('register')
+    data = {
+        'username': 'test',
+        'password': '1234',
+        'email': 'test@example.com',
+        'first_name': 'Test',
+        'last_name': 'User',
+    }
 
-    def test_email_validation_success(self):
-        data = {'email': self.email}
-        response = self.client.post(self.url, data)
+    def test_register_and_email_validation_success(self):
+        resp = self.client.post(self.url, self.data)
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
 
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data, {'detail': 'Validation email sent.'})
-
-        email_validation_token = EmailValidationToken.objects.filter(user=self.user).first()
+        user = User.objects.filter(username='test').first()
+        email_validation_token = EmailValidationToken.objects.filter(user=user).first()
         self.assertIsNotNone(email_validation_token)
 
-    def test_email_validation_user_not_found(self):
-        data = {'email': 'not_found@example.com'}
-        response = self.client.post(self.url, data)
+        resp = self.client.post(
+            reverse('email_validation_confirm'),
+            {'token': email_validation_token.token},
+        )
+        assert resp.status_code == status.HTTP_302_FOUND
 
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data, {'detail': 'User not found.'})
-
-    def test_email_validation_email_already_validated(self):
-        self.user.email_validated = True
-        self.user.save()
-
-        data = {'email': self.email}
-        response = self.client.post(self.url, data)
-
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        # Token has alredy verified.
+        resp = self.client.post(
+            reverse('email_validation_confirm'),
+            {'token': email_validation_token.token},
+        )
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST

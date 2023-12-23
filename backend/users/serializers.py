@@ -3,6 +3,8 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+
     class Meta:
         model = User
         fields = ('username', 'password', 'email', 'first_name', 'last_name')
@@ -12,9 +14,10 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-
-class EmailValidationSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError(f'{value} has been registered.')
+        return value
 
 
 class EmailTokenValidationSerializer(serializers.Serializer):
