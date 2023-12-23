@@ -41,6 +41,7 @@ jobs:
           DEPLOY_WEB_HOST: ${{vars.TEST_WEB_HOST}}
           DEPLOY_WEB_PORT: ${{vars.TEST_WEB_PORT}}
           DEBUG: ${{vars.TEST_DEBUG}}
+          MODE: ${{vars.MODE}}
           EMAIL_PASSWORD: ${{vars.TEST_EMAIL_PASSWORD}}
           CSRF_TRUSTED_ORIGINS: ${{vars.TEST_CSRF_TRUSTED_ORIGINS}}
           DJANGO_SESSION_COOKIE_NAME: ci_session

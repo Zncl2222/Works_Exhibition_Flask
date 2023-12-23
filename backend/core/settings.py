@@ -22,7 +22,11 @@ env.read_env(str(ROOT_DIR.path('.env')))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-REDIRECT_URL = env('DEPLOY_WEB_HOST') + ':' + env('DEPLOY_WEB_PORT')
+# Set MODE on github for action to use
+if env.get_value('MODE') != 'ci':
+    REDIRECT_URL = env('DEPLOY_WEB_HOST') + ':' + env('DEPLOY_WEB_PORT')
+else:
+    REDIRECT_URL = 'https://github.com'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
