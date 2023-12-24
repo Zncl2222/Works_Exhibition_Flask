@@ -34,3 +34,16 @@ class RegisterViewTest(APITestCase):
             {'token': email_validation_token.token},
         )
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+
+class GoogleOAuthLoginViewTest(APITestCase):
+    def test_google_oauth_login(self):
+        # Simulate a POST request to the view
+        resp = self.client.get('/users/google-login/')
+        assert resp.status_code == status.HTTP_302_FOUND
+
+    def test_google_oauth_logout(self):
+        resp = self.client.get('/users/google-logout/')
+        assert resp.status_code == status.HTTP_302_FOUND
+
+    # TODO: Google Oauth Callback test

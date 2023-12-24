@@ -4,16 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "4.2.5"
-djangorestframework = "3.14.0"
-pandas = "2.1.1"
+django = "==4.2.5"
+djangorestframework = "==3.14.0"
+pandas = "==2.1.1"
 psycopg2-binary = "*"
 django-environ = "*"
 django-cors-headers = "*"
 gunicorn = "*"
 dj_static = "*"
-uc-sgsim = "1.2.8"
-django-filter = "23.3"
+uc-sgsim = "==1.2.8"
+django-filter = "==23.3"
+google-auth-oauthlib = "*"
 
 [dev-packages]
 pre-commit = "*"
