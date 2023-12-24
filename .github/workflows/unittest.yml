@@ -48,6 +48,7 @@ jobs:
           DJANGO_CSRF_COOKIE_NAME: ci_csrt_token
         run: |
           cd backend
+          echo '${{secrets.GOOGLE_OAUTH_CLIENT_SECRET}}' > client_secret.json
           pytest --reuse-db -v -s --cov --cov-report xml:coverage.xml
       - name: Run codacy-coverage-reporter
         if: matrix.python-version == '3.11'
