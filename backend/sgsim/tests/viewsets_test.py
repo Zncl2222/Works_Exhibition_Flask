@@ -1,7 +1,7 @@
 import pytest
 from rest_framework import status
-from users.models import User
 from rest_framework.test import APITestCase
+from users.models import User
 
 
 @pytest.mark.sgsim

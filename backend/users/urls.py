@@ -1,9 +1,7 @@
 from django.urls import include, path
-
 from rest_framework import routers
 
-from .views import OAuthViewset, EmailValidationConfirmView, RegisterView
-
+from .views import EmailValidationConfirmView, OAuthViewset, RegisterView
 
 router = routers.DefaultRouter()
 router.register(r'', OAuthViewset, basename='google')

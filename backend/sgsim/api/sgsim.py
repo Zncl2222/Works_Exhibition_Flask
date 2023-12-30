@@ -4,7 +4,6 @@ import time
 
 import uc_sgsim as uc
 from uc_sgsim.cov_model import Exponential, Gaussian, Spherical
-
 from utils.utils import array_to_string_encoder
 
 

@@ -1,7 +1,8 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from ..models import User, EmailValidationToken
+
+from ..models import EmailValidationToken, User
 
 
 class RegisterViewTest(APITestCase):

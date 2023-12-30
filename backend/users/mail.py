@@ -1,9 +1,9 @@
-from django.core.mail import send_mail
 from core import settings
+from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
+from utils.exceptions import AlreadyVerified
 
 from .models import EmailValidationToken, User
-from utils.exceptions import AlreadyVerified
 
 
 def send_validation_mail(email: str):

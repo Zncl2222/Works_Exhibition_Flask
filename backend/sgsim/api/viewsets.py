@@ -1,18 +1,15 @@
-from rest_framework import status
-from rest_framework import viewsets
+from django_filters import rest_framework as filters
+from rest_framework import status, viewsets
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django_filters import rest_framework as filters
+from utils.permissions import EmailVerify
 
 from ..models import SgsimHistory
 from .filters import SgsimHistoryFilter
 from .paginations import SgsimListPagination
-from .serializers import ParametersSerializer
-from .serializers import SgsimListSerializer
-from .serializers import SgsimSerializer
+from .serializers import ParametersSerializer, SgsimListSerializer, SgsimSerializer
 from .sgsim import Sgsim
-from utils.permissions import EmailVerify
 
 
 class SgsimModelViewSet(viewsets.GenericViewSet, CreateModelMixin, ListModelMixin):

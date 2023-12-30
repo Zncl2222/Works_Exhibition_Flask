@@ -1,24 +1,21 @@
 import os
 
 from core import settings
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
-from django.contrib.auth import authenticate, login, logout
-from google_auth_oauthlib.flow import Flow
-from google.oauth2 import id_token
 from google.auth.transport import requests
-
-from rest_framework.viewsets import GenericViewSet
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
 from rest_framework import generics, permissions, status
-from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
-from .serializers import UserSerializer
-from .models import EmailValidationToken
-from .serializers import EmailTokenValidationSerializer
 from .mail import send_validation_mail
-
+from .models import EmailValidationToken
+from .serializers import EmailTokenValidationSerializer, UserSerializer
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 

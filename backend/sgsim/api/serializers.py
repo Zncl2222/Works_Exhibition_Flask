@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from ..models import SgsimParams
-from ..models import SgsimHistory
+from ..models import SgsimHistory, SgsimParams
 
 
 class ParametersSerializer(serializers.ModelSerializer):
