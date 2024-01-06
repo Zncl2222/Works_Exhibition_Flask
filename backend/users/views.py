@@ -5,8 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
-from google.auth.transport import requests
-from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from rest_framework import generics, permissions, status
 from rest_framework.decorators import action
@@ -42,25 +40,7 @@ class OAuthViewset(GenericViewSet):
         # Get the state from the session to verify the response.
         state = request.session.get('oauth_state')
 
-        flow = Flow.from_client_secrets_file(
-            f'{settings.ROOT_DIR}/backend/client_secret.json',
-            scopes=None,
-            redirect_uri=request.build_absolute_uri('/users/google-callback/'),
-        )
-
-        # Use the authorization response to get tokens
-        flow.fetch_token(authorization_response=request.build_absolute_uri(), state=state)
-
-        # Use the id_token to get user information
-        token = flow.credentials.id_token
-        request_google_oauth = requests.Request()
-        id_info = id_token.verify_oauth2_token(
-            token,
-            request_google_oauth,
-        )
-
-        user = authenticate(request=request, id_info=id_info)
-
+        user = authenticate(request=request, oauth_state=state)
         if user:
             if user.is_active:
                 login(request, user)
