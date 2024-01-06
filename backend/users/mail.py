@@ -30,4 +30,5 @@ def send_validation_mail(email: str):
             recipient_list,
             html_message=f'{message}<br><a href={url}{token}>{url}{token}</a>',
         )
+        print(f'Email sent successfully to {recipient_list} !')
         return ({'title': 'Success', 'detail': 'Validation email sent.'},)
