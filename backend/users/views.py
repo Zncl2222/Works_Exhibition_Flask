@@ -24,11 +24,20 @@ class OAuthViewset(GenericViewSet):
     @action(detail=False, methods=['get'], url_path='google-login')
     def google_login(self, request):
         # Set up the Google OAuth2.0 flow
-        flow = Flow.from_client_secrets_file(
-            f'{settings.ROOT_DIR}/backend/client_secret.json',
-            scopes=['openid', 'profile', 'email'],
-            redirect_uri=request.build_absolute_uri('/users/google-callback/'),
-        )
+        try:
+            flow = Flow.from_client_secrets_file(
+                f'{settings.ROOT_DIR}/backend/client_secret.json',
+                scopes=['openid', 'profile', 'email'],
+                redirect_uri=request.build_absolute_uri('/users/google-callback/'),
+            )
+        except FileNotFoundError:
+            return Response(
+                {
+                    'title': 'Error',
+                    'Detail': 'Google login is currently disabled due'
+                    + 'to missing client secrets on the host server.',
+                },
+            )
 
         authorization_url, state = flow.authorization_url(prompt='consent')
         # Store the state so the callback can verify the response.
