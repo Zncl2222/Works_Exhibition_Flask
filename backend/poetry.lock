@@ -1466,6 +1466,16 @@ socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
+name = "uwsgi"
+version = "2.0.23"
+description = "The uWSGI server"
+optional = false
+python-versions = "*"
+files = [
+    {file = "uwsgi-2.0.23.tar.gz", hash = "sha256:0cafda0c16f921db7fe42cfaf81b167cf884ee17350efbdd87d1ecece2d7de37"},
+]
+
+[[package]]
 name = "virtualenv"
 version = "20.25.0"
 description = "Virtual Python Environment builder"
@@ -1488,4 +1498,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a78205b7e23db6b22b916e485059b0b8ffe4ff81becc8071bd7fc1dc16308e9d"
+content-hash = "f862c5e7d57d3488ce7952acc303cae4bc6807e67c1a324daad3cbb901e8fbe0"
